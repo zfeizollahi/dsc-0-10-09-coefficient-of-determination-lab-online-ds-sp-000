@@ -47,13 +47,14 @@ import numpy as np
 def sq_err(ys_a, ys_b):
     """
     input
-    y_a : regression line
-    y_b : mean line
+    y_a : one line of ys (e.g. actual y)
+    y_b : another line of ys (mean or predicted y)
     
     return
     squared error between regression and true line (ss_tot)
     """
-    pass
+    
+    return sum((ys_a - ys_b) ** 2 )
 
 # Check the output with some toy data
 Y_a = np.array([1,3,5,7])
@@ -63,6 +64,13 @@ sq_err(Y_a, Y_b)
 
 # 2
 ```
+
+
+
+
+    2
+
+
 
 Squared error, as calculated above is only a part of the coefficient of determination, Let's now build a function that would use `sq_err()` function above to calculate the value of r-squared by first calculating SSE and SST (SSres and SStot above) and then plugging these values into the R-squared formula. Perform following tasks
 * Calculate the mean of ys_real
@@ -82,9 +90,12 @@ def r_squared(ys_real, ys_predicted):
     ys_predicted: regression values
     
     return
-    r_squared value
+    r_squared value    
     """
-    pass
+    sse = sq_err(ys_real, ys_predicted)
+    sst = sq_err(ys_real, ys_real.mean() )
+    r_sq = 1 - (sse / sst)
+    return r_sq
 
 # Check the output with some toy data
 Y_real = np.array([1,3,5,7])
@@ -94,6 +105,13 @@ r_squared(Y_real, Y_pred)
 
 # 0.35
 ```
+
+
+
+
+    0.35
+
+
 
 A very low value , but it was not from some real data. So now we have quite a few functions for calculating slope, intercept, bestfit line, plotting and calculating R-squared. In the next lab we'll put these all together to run a complete regression experiment.
 
